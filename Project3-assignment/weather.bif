@@ -1,0 +1,91 @@
+network Unknown {
+}
+variable PRECIPITATION {
+	type discrete [ 3 ] { NONE, RAIN, SNOW };
+}
+variable HUMIDITY {
+	type discrete [ 3 ] { LOW, MEDIUM, HIGH };
+}
+variable OVERCAST {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+variable PRESSURE {
+	type discrete [ 2 ] { LOW, HIGH };
+}
+variable SEASON {
+	type discrete [ 2 ] { RAINY, DRY };
+}
+variable TIME {
+	type discrete [ 2 ] { DAY, NIGHT };
+}
+variable TEMPERATURE {
+	type discrete [ 2 ] { LOW, HIGH };
+}
+variable COLDFRONT {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+variable WINDY {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+variable NICEDAY {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+probability ( PRECIPITATION | HUMIDITY, OVERCAST, TEMPERATURE) {
+	(LOW, TRUE, LOW)  0.7, 0.05, 0.25;
+	(LOW, TRUE, HIGH) 0.7, 0.29, 0.01;
+	(LOW, FALSE, LOW)  0.95, 0.01, 0.04;
+	(LOW, FALSE, HIGH) 0.95, 0.04, 0.01;
+	(MEDIUM, TRUE, LOW) 0.4, 0.1, 0.5;
+	(MEDIUM, TRUE, HIGH) 0.4, 0.55, 0.05;
+	(MEDIUM, FALSE, LOW) 0.9, 0.01, 0.09;
+	(MEDIUM, FALSE, HIGH) 0.9, 0.09, 0.01;
+	(HIGH, TRUE, LOW) 0.1, 0.1, 0.8;
+	(HIGH, TRUE, HIGH) 0.1, 0.89, 0.01;
+	(HIGH, FALSE, LOW) 0.7, 0.05, 0.25;
+	(HIGH, FALSE, HIGH) 0.7, 0.27, 0.03;
+}
+probability ( HUMIDITY | SEASON ) {
+	(RAINY) 0.03, 0.07, 0.9;
+	(DRY) 0.7, 0.2, 0.1;
+}
+probability ( OVERCAST | COLDFRONT ) {
+	(TRUE) 0.80, 0.20;
+	(FALSE) 0.05, 0.95;
+}
+probability ( PRESSURE | COLDFRONT) {
+	(TRUE) 0.2, 0.8;
+	(FALSE) 0.7, 0.3;
+}
+probability ( SEASON ) {
+	table 0.5, 0.5;
+}
+probability ( TIME ) {
+	table 0.5, 0.5;
+}
+probability ( TEMPERATURE | SEASON, TIME) {
+	(RAINY, DAY) 0.05, 0.95;
+	(RAINY, NIGHT) 0.10, 0.90;
+	(DRY, DAY) 0.65, 0.35;
+	(DRY, NIGHT) 0.70, 0.30;
+}
+probability ( COLDFRONT ) {
+	table 0.2, 0.8;
+}
+probability ( WINDY | PRESSURE ) {
+	(LOW) 0.1, 0.9;
+	(HIGH) 0.7, 0.3;
+}
+probability ( NICEDAY | PRECIPITATION, WINDY, TEMPERATURE ) {
+	(NONE, TRUE, LOW)  0.30, 0.70;
+	(NONE, TRUE, HIGH) 0.90, 0.10;
+	(NONE, FALSE, LOW)  0.70, 0.30;
+	(NONE, FALSE, HIGH) 0.99, 0.01;
+	(RAIN, TRUE, LOW) 0.01, 0.99;
+	(RAIN, TRUE, HIGH) 0.02, 0.98;
+	(RAIN, FALSE, LOW) 0.02, 0.98;
+	(RAIN, FALSE, HIGH) 0.1, 0.9;
+	(SNOW, TRUE, LOW) 0.01, 0.99;
+	(SNOW, TRUE, HIGH) 0.01, 0.99;
+	(SNOW, FALSE, LOW) 0.2, 0.8;
+	(SNOW, FALSE, HIGH) 0.3, 0.7;
+}

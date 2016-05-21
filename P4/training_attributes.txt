@@ -1,0 +1,11 @@
+Alternate, Yes, No
+Bar, Yes, No
+Fri/Sat, Yes, No
+Hungry, Yes, No
+Patrons, None, Some, Full
+Price, $, $$, $$$
+Raining, Yes, No
+Reservation, Yes, No
+Type, French, Italian, Thai, Burger
+WaitEstimate, 0-10, 10-30, 30-60, >60
+ClassLabel, Yes, No

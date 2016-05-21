@@ -1,0 +1,81 @@
+network Unknown {
+}
+
+variable SCHOOL {
+	type discrete [ 2 ] { GO, SKIP };
+}
+variable HOMEWORK {
+	type discrete [ 2 ] { DO, DONT };
+}
+variable FRIENDS {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+variable WEATHER {
+	type discrete [ 3 ] { SUN, RAIN, SNOW };
+}
+variable NICE {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+variable COLOR {
+	type discrete [ 2 ] { RED, BLUE };
+}
+variable FUN {
+	type discrete [ 2 ] { YES, NO };
+}
+variable STAR {
+	type discrete [ 3 ] { BRIGHT, FAR, HOT };
+}
+variable EMOTION {
+	type discrete [ 2 ] { HAPPY, SAD };
+}
+variable TIME {
+	type discrete [ 2 ] { TRUE, FALSE };
+}
+probability ( WEATHER | STAR, NICE, TIME) {
+	(BRIGHT, TRUE, TRUE)  0.6, 0.15, 0.25;
+	(BRIGHT, TRUE, FALSE) 0.6, 0.29, 0.11;
+	(BRIGHT, FALSE, TRUE)  0.75, 0.11, 0.14;
+	(BRIGHT, FALSE, FALSE) 0.95, 0.04, 0.01;
+	(FAR, TRUE, TRUE) 0.5, 0.1, 0.4;
+	(FAR, TRUE, FALSE) 0.3, 0.55, 0.15;
+	(FAR, FALSE, TRUE) 0.6, 0.01, 0.39;
+	(FAR, FALSE, FALSE) 0.9, 0.09, 0.01;
+	(HOT, TRUE, TRUE) 0.1, 0.2, 0.7;
+	(HOT, TRUE, FALSE) 0.2, 0.79, 0.01;
+	(HOT, FALSE, TRUE) 0.5, 0.25, 0.25;
+	(HOT, FALSE, FALSE) 0.6, 0.37, 0.03;
+}
+probability ( STAR | EMOTION ) {
+	(HAPPY) 0.23, 0.07, 0.7;
+	(SAD) 0.6, 0.1, 0.3;
+}
+probability ( NICE | FRIENDS ) {
+	(TRUE) 0.70, 0.30;
+	(FALSE) 0.05, 0.95;
+}
+probability ( SCHOOL | HOMEWORK) {
+	(TRUE) 0.2, 0.8;
+	(FALSE) 0.7, 0.3;
+}
+probability ( FRIENDS | FUN) {
+	(YES) 0.1, 0.9;
+	(NO) 0.5, 0.5;
+}
+probability ( HOMEWORK ) {
+	table 0.5, 0.5;
+}
+probability ( FRIENDS ) {
+	table 0.3, 0.7;
+}
+probability ( COLOR ) {
+	table 0.2, 0.8;
+}
+probability ( FUN ) {
+	table 0.9, 0.1;
+}
+probability ( TIME | COLOR, FUN) {
+	(RED, YES) 0.15, 0.85;
+	(RED, NO) 0.11, 0.89;
+	(BLUE, YES) 0.55, 0.45;
+	(BLUE, NO) 0.60, 0.40;
+}
